@@ -1,0 +1,31 @@
+- nao pode ter mais de um porcoes (nem na receita nem no pedido)
+- tokens separados por espaço
+- para separar numeros de unidades (por exemplo 300g ser separado em dois tokens: 300 e g), considerar que se comeca com digito e termina com letra, entao eh um numero seguido de unidade
+- no output so aparece se esta no pedido (por exemplo se forno for 0C 0min, entao nao aparece no output)
+- calcula tempo total somando tempo usado para a receita e compara com tempo total disponivel para identificar se esta dentro do limite ou nao
+
+erros:
+- Arquivo não começa com encomenda "nome":.
+- pedido encontrado fora do bloco encomenda.
+- receita não encontrada dentro de pedido.
+- planejar não encontrado ao final do programa.
+- Campo fora de lugar.
+
+- Mais de uma definição de porções dentro da mesma receita.
+- Mais de uma definição de porções dentro do mesmo pedido.
+
+- porções ausente na receita.
+- porções ausente no pedido.
+- Receita sem ingrediente, forno, resfriar ou decorar.
+
+- Token com número e unidade não separado corretamente.
+- Unidade inválida após número (deve ser g, C ou min).
+- Identificador inválido (nome incorreto).
+- Número inválido (negativo ou mal formatado).
+
+- Tempo de forno, resfriar ou decoração inválido (negativo).
+- Medida indefinida em contexto onde é necessária.
+
+- Ação com tempo zero aparecendo no output.
+- Cálculo incorreto do tempo total do pedido.
+- Status de comparação com tempo máximo incorreto.

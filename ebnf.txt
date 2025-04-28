@@ -1,0 +1,39 @@
+programa = "encomenda" texto ":" { pedido } "planejar" ;
+
+pedido = "pedido:" receita { pedido_item } ;
+
+receita = "receita" identificador ":" { receita_item } ;
+
+receita_item = porcoes | medida | ingrediente | forno | resfriar | decorar ;
+
+pedido_item = porcoes | tempo_total ;
+
+porcoes = "porções" numero ;
+
+medida = "medida" identificador ;
+
+ingrediente = "ingrediente" identificador quantidade ;
+
+forno = "forno" temperatura duracao ;
+
+resfriar = "resfriar" duracao ;
+
+decorar = "decorar" texto ;
+
+quantidade = numero "g" ;
+
+temperatura = numero "C" ;
+
+duracao = numero "min" ;
+
+texto = '"' { caracter } '"' ;
+
+identificador = letra, { letra | dígito } ;
+
+numero = dígito, { dígito } ;
+
+caracter = ? qualquer caractere exceto " ? ;
+
+letra = "a".."z" | "A".."Z" ;
+
+dígito = "0".."9" ;
