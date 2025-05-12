@@ -1,29 +1,29 @@
 encomenda:
     pedido:
         receita bolo_chocolate:
-            porções 8
+            porcoes 8
             ingrediente farinha 300g
-            ingrediente açúcar 200g
+            ingrediente acucar 200g
             ingrediente chocolate 100g
             ingrediente ovos 4
             forno 180C 40min
             resfriar 20min
             decorar "cobertura de chocolate"
 
-        porções 16
+        porcoes 16
         tempo_total 180min
 
     pedido:
         receita brigadeiro:
-            porções 30
+            porcoes 30
             ingrediente leite_condensado 395g
-            ingrediente chocolate_em_pó 30g
+            ingrediente chocolate_em_po 30g
             ingrediente manteiga 20g
             forno 0C 0min
             resfriar 30min
             decorar "granulado"
 
-        porções 60
+        porcoes 60
         tempo_total 120min
 
 planejar
