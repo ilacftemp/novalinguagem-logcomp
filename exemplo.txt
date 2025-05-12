@@ -1,0 +1,10 @@
+encomenda "João":
+    pedido:
+        receita bolo:
+            porções 4
+            ingrediente farinha 300g
+            forno 180C 40min
+            decorar "cobertura"
+        porções 4
+        tempo_total 60min
+planejar
