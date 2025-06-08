@@ -18,6 +18,7 @@ int main(int argc, char** argv) {
 
     if (yyparse() == 0) {
         gerar_output_go(&encomenda);
+        liberar_memoria();
     } else {
         fprintf(stderr, "Erro ao interpretar o arquivo.\n");
         return 1;

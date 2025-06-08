@@ -32,10 +32,10 @@ number     {digit}+
 
 {id}               { yylval.id  = strdup(yytext); return IDENTIFICADOR; }
 \"([^\n\"])*\"     {
-                     yytext[yyleng-1] = 0;
-                     yylval.txt = strdup(yytext+1);
-                     return STRING;
-                   }
+    char* raw = strndup(yytext + 1, yyleng - 2);
+    yylval.txt = raw;
+    return STRING;
+}
 
 [ \t\r\n]+         /* ignora espaços em branco */
 .                  { return yytext[0]; }

@@ -878,10 +878,10 @@ case 19:
 YY_RULE_SETUP
 #line 34 "lexer.l"
 {
-                     yytext[yyleng-1] = 0;
-                     yylval.txt = strdup(yytext+1);
-                     return STRING;
-                   }
+    char* raw = strndup(yytext + 1, yyleng - 2);
+    yylval.txt = raw;
+    return STRING;
+}
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */

@@ -71,10 +71,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-void yyerror(const char *s);
-int yylex(void);
+#include <string.h>
+#include "estrutura.h"
 
-#line 78 "parser.tab.c"
+extern Encomenda encomenda;
+int pedido_atual = -1;
+
+void liberar_memoria();
+
+#line 83 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -459,16 +464,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   34
+#define YYLAST   30
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  22
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  8
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  19
+#define YYNRULES  18
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  40
+#define YYNSTATES  38
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   275
@@ -519,8 +524,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    24,    24,    25,    29,    30,    34,    38,    39,    43,
-      44,    45,    46,    47,    48,    49,    53,    54,    58,    59
+       0,    29,    29,    30,    34,    35,    39,    54,    55,    59,
+      63,    72,    81,    88,    92,    99,   100,   104,   108
 };
 #endif
 
@@ -565,10 +570,10 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       2,   -19,    17,    -3,   -20,   -20,   -20,    -2,     8,   -20,
-       1,   -20,   -20,    12,     4,     3,   -20,    -1,     5,     6,
-       7,    10,    11,    13,   -20,    -8,   -20,   -20,     0,    14,
-     -20,   -20,    15,    16,   -20,   -20,   -20,   -20,   -20,   -20
+      10,   -19,    16,    -4,   -20,   -20,   -20,    -2,     6,   -20,
+       0,   -20,   -20,    11,     1,     2,   -20,    -3,     4,     3,
+       7,     8,     5,   -20,    -8,   -20,    -1,     9,   -20,   -20,
+      13,    12,   -20,   -20,   -20,   -20,   -20,   -20
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -577,21 +582,21 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     0,     4,     1,     4,     0,     0,     2,
-       0,     5,     3,     0,     0,     0,     7,    16,     0,     0,
-       0,     0,     0,     0,     8,     6,     9,    10,     0,     0,
-      14,    15,     0,     0,    17,    12,    11,    13,    18,    19
+       0,     5,     3,     0,     0,     0,     7,    15,     0,     0,
+       0,     0,     0,     8,     6,     9,     0,     0,    13,    14,
+       0,     0,    16,    11,    10,    12,    17,    18
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -20,   -20,    22,   -20,   -20,   -20,   -20,   -20
+     -20,   -20,    23,   -20,   -20,   -20,   -20,   -20
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     7,    11,    17,    24,    25,    34
+       0,     2,     7,    11,    17,    23,    24,    32
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -599,18 +604,18 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      32,     3,     4,     9,    10,     1,    33,    18,    19,    20,
-      21,    22,    23,    12,    10,    35,    36,     5,     6,    14,
-      26,     0,    13,    15,    16,    27,    28,    29,     8,    30,
-      38,     0,    37,    31,    39
+      30,     3,     4,     9,    10,    18,    31,    19,    20,    21,
+      22,    12,    10,     1,    33,    34,     5,     6,    14,    25,
+      15,    13,    26,    16,    27,    29,    28,    35,    36,     8,
+      37
 };
 
 static const yytype_int8 yycheck[] =
 {
-       8,    20,    21,     5,     6,     3,    14,     8,     9,    10,
-      11,    12,    13,     5,     6,    15,    16,     0,    21,     7,
-      15,    -1,    21,    19,    21,    19,    19,    17,     6,    18,
-      15,    -1,    18,    20,    18
+       8,    20,    21,     5,     6,     8,    14,    10,    11,    12,
+      13,     5,     6,     3,    15,    16,     0,    21,     7,    15,
+      19,    21,    19,    21,    17,    20,    18,    18,    15,     6,
+      18
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -618,23 +623,23 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     3,    23,    20,    21,     0,    21,    24,    24,     5,
-       6,    25,     5,    21,     7,    19,    21,    26,     8,     9,
-      10,    11,    12,    13,    27,    28,    15,    19,    19,    17,
-      18,    20,     8,    14,    29,    15,    16,    18,    15,    18
+       6,    25,     5,    21,     7,    19,    21,    26,     8,    10,
+      11,    12,    13,    27,    28,    15,    19,    17,    18,    20,
+       8,    14,    29,    15,    16,    18,    15,    18
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    22,    23,    23,    24,    24,    25,    26,    26,    27,
-      27,    27,    27,    27,    27,    27,    28,    28,    29,    29
+      27,    27,    27,    27,    27,    28,    28,    29,    29
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     4,     5,     0,     2,     7,     0,     2,     2,
-       2,     3,     3,     3,     2,     2,     0,     2,     2,     2
+       3,     3,     3,     2,     2,     0,     2,     2,     2
 };
 
 
@@ -1097,8 +1102,110 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 6: /* pedido: PEDIDO ':' RECEITA IDENTIFICADOR ':' itens_receita itens_pedido  */
+#line 39 "parser.y"
+                                                                      {
+        pedido_atual = encomenda.num_pedidos++;
+        Pedido* p = &encomenda.pedidos[pedido_atual];
+        Receita* r = &p->receita;
 
-#line 1102 "parser.tab.c"
+        r->nome_receita = strdup((yyvsp[-3].id));
+        r->num_ingredientes = 0;
+        r->forno_duracao = 0;
+        r->forno_temp = 0;
+        r->resfriar = 0;
+        r->decoracao = NULL;
+    }
+#line 1120 "parser.tab.c"
+    break;
+
+  case 9: /* item_receita: PORCOES NUMERO  */
+#line 59 "parser.y"
+                     {
+        if (pedido_atual >= 0)
+            encomenda.pedidos[pedido_atual].receita.porcoes_receita = (yyvsp[0].num);
+    }
+#line 1129 "parser.tab.c"
+    break;
+
+  case 10: /* item_receita: INGREDIENTE IDENTIFICADOR QUANTIDADE  */
+#line 63 "parser.y"
+                                           {
+        if (pedido_atual >= 0) {
+            Receita* r = &encomenda.pedidos[pedido_atual].receita;
+            Ingrediente* ing = &r->ingredientes[r->num_ingredientes++];
+            ing->nome = strdup((yyvsp[-1].id));
+            ing->quantidade = (yyvsp[0].num);
+            ing->unidade = "g";
+        }
+    }
+#line 1143 "parser.tab.c"
+    break;
+
+  case 11: /* item_receita: INGREDIENTE IDENTIFICADOR NUMERO  */
+#line 72 "parser.y"
+                                       {
+        if (pedido_atual >= 0) {
+            Receita* r = &encomenda.pedidos[pedido_atual].receita;
+            Ingrediente* ing = &r->ingredientes[r->num_ingredientes++];
+            ing->nome = strdup((yyvsp[-1].id));
+            ing->quantidade = (yyvsp[0].num);
+            ing->unidade = "unidades";
+        }
+    }
+#line 1157 "parser.tab.c"
+    break;
+
+  case 12: /* item_receita: FORNO TEMPERATURA DURACAO  */
+#line 81 "parser.y"
+                                {
+        if (pedido_atual >= 0) {
+            Receita* r = &encomenda.pedidos[pedido_atual].receita;
+            r->forno_temp = (yyvsp[-1].num);
+            r->forno_duracao = (yyvsp[0].num);
+        }
+    }
+#line 1169 "parser.tab.c"
+    break;
+
+  case 13: /* item_receita: RESFRIAR DURACAO  */
+#line 88 "parser.y"
+                       {
+        if (pedido_atual >= 0)
+            encomenda.pedidos[pedido_atual].receita.resfriar = (yyvsp[0].num);
+    }
+#line 1178 "parser.tab.c"
+    break;
+
+  case 14: /* item_receita: DECORAR STRING  */
+#line 92 "parser.y"
+                     {
+        if (pedido_atual >= 0)
+            encomenda.pedidos[pedido_atual].receita.decoracao = strdup((yyvsp[0].txt));
+    }
+#line 1187 "parser.tab.c"
+    break;
+
+  case 17: /* item_pedido: PORCOES NUMERO  */
+#line 104 "parser.y"
+                     {
+        if (pedido_atual >= 0)
+            encomenda.pedidos[pedido_atual].porcoes_pedido = (yyvsp[0].num);
+    }
+#line 1196 "parser.tab.c"
+    break;
+
+  case 18: /* item_pedido: TEMPO_TOTAL DURACAO  */
+#line 108 "parser.y"
+                          {
+        if (pedido_atual >= 0)
+            encomenda.pedidos[pedido_atual].tempo_total = (yyvsp[0].num);
+    }
+#line 1205 "parser.tab.c"
+    break;
+
+
+#line 1209 "parser.tab.c"
 
       default: break;
     }
@@ -1291,14 +1398,23 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 62 "parser.y"
+#line 114 "parser.y"
 
 
-int main(void) {
-    return yyparse();
+int yyerror(const char* s) {
+    fprintf(stderr, "Erro de sintaxe: %s\n", s);
+    return 1;
 }
 
-void yyerror(const char *s) {
-    fprintf(stderr, "Erro de sintaxe: %s\n", s);
-    exit(EXIT_FAILURE);
+void liberar_memoria() {
+    for (int i = 0; i < encomenda.num_pedidos; i++) {
+        Receita* r = &encomenda.pedidos[i].receita;
+
+        if (r->nome_receita) free(r->nome_receita);
+        if (r->decoracao) free(r->decoracao);
+
+        for (int j = 0; j < r->num_ingredientes; j++) {
+            if (r->ingredientes[j].nome) free(r->ingredientes[j].nome);
+        }
+    }
 }
