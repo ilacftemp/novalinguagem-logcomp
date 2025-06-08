@@ -1,4 +1,4 @@
-ENCOMENDA - NomeCliente
+ENCOMENDA
 
 =============================================
 Pedido 1: Bolo de Chocolate
