@@ -23,7 +23,7 @@ encomenda:
             resfriar 30min
             decorar "granulado"
 
-        porcoes_total 120
+        porcoes_total 60
         tempo_total 120min
 
 planejar
