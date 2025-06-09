@@ -8,7 +8,9 @@ receita_item = porcoes | medida | ingrediente | forno | resfriar | decorar ;
 
 pedido_item = porcoes | tempo_total ;
 
-porcoes = "porções" numero ;
+porcoes = "porcoes" numero ;
+
+porcoes_total = "porcoes_total" numero ;
 
 medida = "medida" identificador ;
 

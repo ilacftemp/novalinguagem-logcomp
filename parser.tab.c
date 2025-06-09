@@ -121,22 +121,24 @@ enum yysymbol_kind_t
   YYSYMBOL_FORNO = 11,                     /* FORNO  */
   YYSYMBOL_RESFRIAR = 12,                  /* RESFRIAR  */
   YYSYMBOL_DECORAR = 13,                   /* DECORAR  */
-  YYSYMBOL_TEMPO_TOTAL = 14,               /* TEMPO_TOTAL  */
-  YYSYMBOL_NUMERO = 15,                    /* NUMERO  */
-  YYSYMBOL_QUANTIDADE = 16,                /* QUANTIDADE  */
-  YYSYMBOL_TEMPERATURA = 17,               /* TEMPERATURA  */
-  YYSYMBOL_DURACAO = 18,                   /* DURACAO  */
-  YYSYMBOL_IDENTIFICADOR = 19,             /* IDENTIFICADOR  */
-  YYSYMBOL_STRING = 20,                    /* STRING  */
-  YYSYMBOL_21_ = 21,                       /* ':'  */
-  YYSYMBOL_YYACCEPT = 22,                  /* $accept  */
-  YYSYMBOL_programa = 23,                  /* programa  */
-  YYSYMBOL_bloco_pedidos = 24,             /* bloco_pedidos  */
-  YYSYMBOL_pedido = 25,                    /* pedido  */
-  YYSYMBOL_itens_receita = 26,             /* itens_receita  */
-  YYSYMBOL_item_receita = 27,              /* item_receita  */
-  YYSYMBOL_itens_pedido = 28,              /* itens_pedido  */
-  YYSYMBOL_item_pedido = 29                /* item_pedido  */
+  YYSYMBOL_PORCOES_TOTAL = 14,             /* PORCOES_TOTAL  */
+  YYSYMBOL_TEMPO_TOTAL = 15,               /* TEMPO_TOTAL  */
+  YYSYMBOL_NUMERO = 16,                    /* NUMERO  */
+  YYSYMBOL_QUANTIDADE = 17,                /* QUANTIDADE  */
+  YYSYMBOL_TEMPERATURA = 18,               /* TEMPERATURA  */
+  YYSYMBOL_DURACAO = 19,                   /* DURACAO  */
+  YYSYMBOL_IDENTIFICADOR = 20,             /* IDENTIFICADOR  */
+  YYSYMBOL_STRING = 21,                    /* STRING  */
+  YYSYMBOL_22_ = 22,                       /* ':'  */
+  YYSYMBOL_YYACCEPT = 23,                  /* $accept  */
+  YYSYMBOL_programa = 24,                  /* programa  */
+  YYSYMBOL_bloco_pedidos = 25,             /* bloco_pedidos  */
+  YYSYMBOL_pedido = 26,                    /* pedido  */
+  YYSYMBOL_27_1 = 27,                      /* $@1  */
+  YYSYMBOL_itens_receita = 28,             /* itens_receita  */
+  YYSYMBOL_item_receita = 29,              /* item_receita  */
+  YYSYMBOL_itens_pedido = 30,              /* itens_pedido  */
+  YYSYMBOL_item_pedido = 31                /* item_pedido  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -464,19 +466,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   30
+#define YYLAST   32
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  22
+#define YYNTOKENS  23
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  8
+#define YYNNTS  9
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  18
+#define YYNRULES  19
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  38
+#define YYNSTATES  39
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   275
+#define YYMAXUTOK   276
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -495,7 +497,7 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,    21,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,    22,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -517,15 +519,15 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20
+      15,    16,    17,    18,    19,    20,    21
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    29,    29,    30,    34,    35,    39,    54,    55,    59,
-      63,    72,    81,    88,    92,    99,   100,   104,   108
+       0,    29,    29,    30,    34,    35,    39,    39,    58,    59,
+      63,    67,    76,    85,    92,    96,   103,   104,   108,   113
 };
 #endif
 
@@ -543,10 +545,10 @@ static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "ENCOMENDA", "TEXTO",
   "PLANEJAR", "PEDIDO", "RECEITA", "PORCOES", "MEDIDA", "INGREDIENTE",
-  "FORNO", "RESFRIAR", "DECORAR", "TEMPO_TOTAL", "NUMERO", "QUANTIDADE",
-  "TEMPERATURA", "DURACAO", "IDENTIFICADOR", "STRING", "':'", "$accept",
-  "programa", "bloco_pedidos", "pedido", "itens_receita", "item_receita",
-  "itens_pedido", "item_pedido", YY_NULLPTR
+  "FORNO", "RESFRIAR", "DECORAR", "PORCOES_TOTAL", "TEMPO_TOTAL", "NUMERO",
+  "QUANTIDADE", "TEMPERATURA", "DURACAO", "IDENTIFICADOR", "STRING", "':'",
+  "$accept", "programa", "bloco_pedidos", "pedido", "$@1", "itens_receita",
+  "item_receita", "itens_pedido", "item_pedido", YY_NULLPTR
 };
 
 static const char *
@@ -556,7 +558,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-20)
+#define YYPACT_NINF (-16)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -570,10 +572,10 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      10,   -19,    16,    -4,   -20,   -20,   -20,    -2,     6,   -20,
-       0,   -20,   -20,    11,     1,     2,   -20,    -3,     4,     3,
-       7,     8,     5,   -20,    -8,   -20,    -1,     9,   -20,   -20,
-      13,    12,   -20,   -20,   -20,   -20,   -20,   -20
+      11,   -15,     1,    -5,   -16,   -16,   -16,     3,     5,   -16,
+      -4,   -16,   -16,    12,     0,     2,   -16,   -16,    -8,     6,
+       7,     8,     4,     9,   -16,    -2,   -16,    -1,    10,   -16,
+     -16,    15,    13,   -16,   -16,   -16,   -16,   -16,   -16
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -582,21 +584,21 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     0,     4,     1,     4,     0,     0,     2,
-       0,     5,     3,     0,     0,     0,     7,    15,     0,     0,
-       0,     0,     0,     8,     6,     9,     0,     0,    13,    14,
-       0,     0,    16,    11,    10,    12,    17,    18
+       0,     5,     3,     0,     0,     0,     6,     8,    16,     0,
+       0,     0,     0,     0,     9,     7,    10,     0,     0,    14,
+      15,     0,     0,    17,    12,    11,    13,    18,    19
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -20,   -20,    23,   -20,   -20,   -20,   -20,   -20
+     -16,   -16,    19,   -16,   -16,   -16,   -16,   -16,   -16
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     7,    11,    17,    23,    24,    32
+       0,     2,     7,    11,    17,    18,    24,    25,    33
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -604,42 +606,42 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      30,     3,     4,     9,    10,    18,    31,    19,    20,    21,
-      22,    12,    10,     1,    33,    34,     5,     6,    14,    25,
-      15,    13,    26,    16,    27,    29,    28,    35,    36,     8,
-      37
+      19,     5,    20,    21,    22,    23,     3,     4,     9,    10,
+      12,    10,    31,    32,     1,    34,    35,     6,    13,    14,
+      15,     0,    26,    29,    16,     8,    28,    27,     0,    36,
+      30,    37,    38
 };
 
 static const yytype_int8 yycheck[] =
 {
-       8,    20,    21,     5,     6,     8,    14,    10,    11,    12,
-      13,     5,     6,     3,    15,    16,     0,    21,     7,    15,
-      19,    21,    19,    21,    17,    20,    18,    18,    15,     6,
-      18
+       8,     0,    10,    11,    12,    13,    21,    22,     5,     6,
+       5,     6,    14,    15,     3,    16,    17,    22,    22,     7,
+      20,    -1,    16,    19,    22,     6,    18,    20,    -1,    19,
+      21,    16,    19
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    23,    20,    21,     0,    21,    24,    24,     5,
-       6,    25,     5,    21,     7,    19,    21,    26,     8,    10,
-      11,    12,    13,    27,    28,    15,    19,    17,    18,    20,
-       8,    14,    29,    15,    16,    18,    15,    18
+       0,     3,    24,    21,    22,     0,    22,    25,    25,     5,
+       6,    26,     5,    22,     7,    20,    22,    27,    28,     8,
+      10,    11,    12,    13,    29,    30,    16,    20,    18,    19,
+      21,    14,    15,    31,    16,    17,    19,    16,    19
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    22,    23,    23,    24,    24,    25,    26,    26,    27,
-      27,    27,    27,    27,    27,    28,    28,    29,    29
+       0,    23,    24,    24,    25,    25,    27,    26,    28,    28,
+      29,    29,    29,    29,    29,    29,    30,    30,    31,    31
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     4,     5,     0,     2,     7,     0,     2,     2,
-       3,     3,     3,     2,     2,     0,     2,     2,     2
+       0,     2,     4,     5,     0,     2,     0,     8,     0,     2,
+       2,     3,     3,     3,     2,     2,     0,     2,     2,     2
 };
 
 
@@ -1102,34 +1104,38 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 6: /* pedido: PEDIDO ':' RECEITA IDENTIFICADOR ':' itens_receita itens_pedido  */
+  case 6: /* $@1: %empty  */
 #line 39 "parser.y"
-                                                                      {
+                                           {
         pedido_atual = encomenda.num_pedidos++;
         Pedido* p = &encomenda.pedidos[pedido_atual];
         Receita* r = &p->receita;
 
-        r->nome_receita = strdup((yyvsp[-3].id));
+        r->nome_receita = strdup((yyvsp[-1].id));
         r->num_ingredientes = 0;
         r->forno_duracao = 0;
         r->forno_temp = 0;
         r->resfriar = 0;
         r->decoracao = NULL;
+
+        p->porcoes_pedido = 0;
+        p->tempo_total = 0;
+
     }
-#line 1120 "parser.tab.c"
+#line 1126 "parser.tab.c"
     break;
 
-  case 9: /* item_receita: PORCOES NUMERO  */
-#line 59 "parser.y"
+  case 10: /* item_receita: PORCOES NUMERO  */
+#line 63 "parser.y"
                      {
         if (pedido_atual >= 0)
             encomenda.pedidos[pedido_atual].receita.porcoes_receita = (yyvsp[0].num);
     }
-#line 1129 "parser.tab.c"
+#line 1135 "parser.tab.c"
     break;
 
-  case 10: /* item_receita: INGREDIENTE IDENTIFICADOR QUANTIDADE  */
-#line 63 "parser.y"
+  case 11: /* item_receita: INGREDIENTE IDENTIFICADOR QUANTIDADE  */
+#line 67 "parser.y"
                                            {
         if (pedido_atual >= 0) {
             Receita* r = &encomenda.pedidos[pedido_atual].receita;
@@ -1139,11 +1145,11 @@ yyreduce:
             ing->unidade = "g";
         }
     }
-#line 1143 "parser.tab.c"
+#line 1149 "parser.tab.c"
     break;
 
-  case 11: /* item_receita: INGREDIENTE IDENTIFICADOR NUMERO  */
-#line 72 "parser.y"
+  case 12: /* item_receita: INGREDIENTE IDENTIFICADOR NUMERO  */
+#line 76 "parser.y"
                                        {
         if (pedido_atual >= 0) {
             Receita* r = &encomenda.pedidos[pedido_atual].receita;
@@ -1153,11 +1159,11 @@ yyreduce:
             ing->unidade = "unidades";
         }
     }
-#line 1157 "parser.tab.c"
+#line 1163 "parser.tab.c"
     break;
 
-  case 12: /* item_receita: FORNO TEMPERATURA DURACAO  */
-#line 81 "parser.y"
+  case 13: /* item_receita: FORNO TEMPERATURA DURACAO  */
+#line 85 "parser.y"
                                 {
         if (pedido_atual >= 0) {
             Receita* r = &encomenda.pedidos[pedido_atual].receita;
@@ -1165,47 +1171,49 @@ yyreduce:
             r->forno_duracao = (yyvsp[0].num);
         }
     }
-#line 1169 "parser.tab.c"
+#line 1175 "parser.tab.c"
     break;
 
-  case 13: /* item_receita: RESFRIAR DURACAO  */
-#line 88 "parser.y"
+  case 14: /* item_receita: RESFRIAR DURACAO  */
+#line 92 "parser.y"
                        {
         if (pedido_atual >= 0)
             encomenda.pedidos[pedido_atual].receita.resfriar = (yyvsp[0].num);
     }
-#line 1178 "parser.tab.c"
+#line 1184 "parser.tab.c"
     break;
 
-  case 14: /* item_receita: DECORAR STRING  */
-#line 92 "parser.y"
+  case 15: /* item_receita: DECORAR STRING  */
+#line 96 "parser.y"
                      {
         if (pedido_atual >= 0)
             encomenda.pedidos[pedido_atual].receita.decoracao = strdup((yyvsp[0].txt));
     }
-#line 1187 "parser.tab.c"
+#line 1193 "parser.tab.c"
     break;
 
-  case 17: /* item_pedido: PORCOES NUMERO  */
-#line 104 "parser.y"
-                     {
-        if (pedido_atual >= 0)
-            encomenda.pedidos[pedido_atual].porcoes_pedido = (yyvsp[0].num);
-    }
-#line 1196 "parser.tab.c"
-    break;
-
-  case 18: /* item_pedido: TEMPO_TOTAL DURACAO  */
+  case 18: /* item_pedido: PORCOES_TOTAL NUMERO  */
 #line 108 "parser.y"
-                          {
-        if (pedido_atual >= 0)
-            encomenda.pedidos[pedido_atual].tempo_total = (yyvsp[0].num);
+                           {
+        if (pedido_atual >= 0) {
+            encomenda.pedidos[pedido_atual].porcoes_pedido = (yyvsp[0].num);
+        }
     }
-#line 1205 "parser.tab.c"
+#line 1203 "parser.tab.c"
+    break;
+
+  case 19: /* item_pedido: TEMPO_TOTAL DURACAO  */
+#line 113 "parser.y"
+                          {
+        if (pedido_atual >= 0) {
+            encomenda.pedidos[pedido_atual].tempo_total = (yyvsp[0].num);
+        }
+    }
+#line 1213 "parser.tab.c"
     break;
 
 
-#line 1209 "parser.tab.c"
+#line 1217 "parser.tab.c"
 
       default: break;
     }
@@ -1398,7 +1406,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 114 "parser.y"
+#line 120 "parser.y"
 
 
 int yyerror(const char* s) {

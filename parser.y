@@ -16,7 +16,7 @@ void liberar_memoria();
     char  *txt;
 }
 
-%token ENCOMENDA TEXTO PLANEJAR PEDIDO RECEITA PORCOES MEDIDA INGREDIENTE FORNO RESFRIAR DECORAR TEMPO_TOTAL
+%token ENCOMENDA TEXTO PLANEJAR PEDIDO RECEITA PORCOES MEDIDA INGREDIENTE FORNO RESFRIAR DECORAR PORCOES_TOTAL TEMPO_TOTAL
 %token <num> NUMERO QUANTIDADE TEMPERATURA DURACAO
 %token <id>  IDENTIFICADOR
 %token <txt> STRING
@@ -36,19 +36,23 @@ bloco_pedidos
     ;
 
 pedido
-    : PEDIDO ':' RECEITA IDENTIFICADOR ':' itens_receita itens_pedido {
+    : PEDIDO ':' RECEITA IDENTIFICADOR ':' {
         pedido_atual = encomenda.num_pedidos++;
         Pedido* p = &encomenda.pedidos[pedido_atual];
         Receita* r = &p->receita;
 
-        r->nome_receita = strdup($4);
+        r->nome_receita = strdup($<id>4);
         r->num_ingredientes = 0;
         r->forno_duracao = 0;
         r->forno_temp = 0;
         r->resfriar = 0;
         r->decoracao = NULL;
-    }
-    ;
+
+        p->porcoes_pedido = 0;
+        p->tempo_total = 0;
+
+    } itens_receita itens_pedido
+
 
 itens_receita
     : /* vazio */
@@ -101,13 +105,15 @@ itens_pedido
     ;
 
 item_pedido
-    : PORCOES NUMERO {
-        if (pedido_atual >= 0)
+    : PORCOES_TOTAL NUMERO {
+        if (pedido_atual >= 0) {
             encomenda.pedidos[pedido_atual].porcoes_pedido = $2;
+        }
     }
     | TEMPO_TOTAL DURACAO {
-        if (pedido_atual >= 0)
+        if (pedido_atual >= 0) {
             encomenda.pedidos[pedido_atual].tempo_total = $2;
+        }
     }
     ;
 

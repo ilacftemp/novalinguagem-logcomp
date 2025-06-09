@@ -8,9 +8,10 @@ void gerar_output_go(Encomenda* e) {
         return;
     }
 
-    fprintf(f, "Println(\"ENCOMENDA\")\n");
-    fprintf(f, "Println(\"\\n=============================================\")\n");
+    fprintf(f, "func main() {\n");
 
+    fprintf(f, "Println(\"ENCOMENDA\")\n");
+    fprintf(f, "Println(\"=============================================\")\n");
 
     for (int i = 0; i < e->num_pedidos; i++) {
         Pedido* p = &e->pedidos[i];
@@ -20,14 +21,14 @@ void gerar_output_go(Encomenda* e) {
         fprintf(f, "Println(\"Pedido %d: %s\")\n", i + 1, r->nome_receita);
         fprintf(f, "Println(\"---------------------------------------------\")\n");
         fprintf(f, "Println(\"Receita adaptada para %d porções:\")\n", p->porcoes_pedido);
-        fprintf(f, "Println(\"\\nIngredientes:\")\n");
+        fprintf(f, "Println(\"Ingredientes:\")\n");
 
         for (int j = 0; j < r->num_ingredientes; j++) {
             Ingrediente* ing = &r->ingredientes[j];
-            fprintf(f, "Println(\"- %s: %dg\")\n", ing->nome, (int)(ing->quantidade * fator));
+            fprintf(f, "Println(\"- %s: %d %s\")\n", ing->nome, (int)(ing->quantidade * fator), ing->unidade);
         }
 
-        fprintf(f, "Println(\"\\nPlano de execução:\")\n");
+        fprintf(f, "Println(\"Plano de execução:\")\n");
         if (r->forno_duracao > 0)
             fprintf(f, "Println(\"1. Assar a %d°C por %d minutos.\")\n", r->forno_temp, r->forno_duracao);
         if (r->resfriar > 0)
@@ -35,7 +36,7 @@ void gerar_output_go(Encomenda* e) {
         if (r->decoracao)
             fprintf(f, "Println(\"3. Decorar com %s.\")\n", r->decoracao);
 
-        fprintf(f, "Println(\"\\nTempo estimado:\")\n");
+        fprintf(f, "Println(\"Tempo estimado:\")\n");
         if (r->forno_duracao > 0)
             fprintf(f, "Println(\"- Forno: %d minutos\")\n", r->forno_duracao);
         if (r->resfriar > 0)
@@ -44,10 +45,10 @@ void gerar_output_go(Encomenda* e) {
             fprintf(f, "Println(\"- Decoração: 20 minutos\")\n");
 
         int total = r->forno_duracao + r->resfriar + 20;
-        fprintf(f, "Println(\"\\nTempo total previsto: %d minutos\")\n", total);
+        fprintf(f, "Println(\"Tempo total previsto: %d minutos\")\n", total);
         fprintf(f, "Println(\"Limite do pedido: %d minutos\")\n", p->tempo_total);
         fprintf(f, "Println(\"Status: %s\")\n", (total <= p->tempo_total) ? "Dentro do limite" : "Fora do limite");
-        fprintf(f, "Println(\"\\n=============================================\")\n");
+        fprintf(f, "Println(\"=============================================\")\n");
     }
 
     fprintf(f, "}\n");

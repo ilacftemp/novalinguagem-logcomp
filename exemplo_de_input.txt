@@ -10,7 +10,7 @@ encomenda:
             resfriar 20min
             decorar "cobertura de chocolate"
 
-        porcoes 16
+        porcoes_total 16
         tempo_total 180min
 
     pedido:
@@ -23,7 +23,7 @@ encomenda:
             resfriar 30min
             decorar "granulado"
 
-        porcoes 60
+        porcoes_total 120
         tempo_total 120min
 
 planejar

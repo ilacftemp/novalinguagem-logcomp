@@ -23,6 +23,7 @@ number     {digit}+
 "forno"            return FORNO;
 "resfriar"         return RESFRIAR;
 "decorar"          return DECORAR;
+"porcoes_total"    return PORCOES_TOTAL;
 "tempo_total"      return TEMPO_TOTAL;
 
 {number}"g"        { yylval.num = atoi(yytext); return QUANTIDADE; }

@@ -65,13 +65,14 @@ extern int yydebug;
     FORNO = 266,                   /* FORNO  */
     RESFRIAR = 267,                /* RESFRIAR  */
     DECORAR = 268,                 /* DECORAR  */
-    TEMPO_TOTAL = 269,             /* TEMPO_TOTAL  */
-    NUMERO = 270,                  /* NUMERO  */
-    QUANTIDADE = 271,              /* QUANTIDADE  */
-    TEMPERATURA = 272,             /* TEMPERATURA  */
-    DURACAO = 273,                 /* DURACAO  */
-    IDENTIFICADOR = 274,           /* IDENTIFICADOR  */
-    STRING = 275                   /* STRING  */
+    PORCOES_TOTAL = 269,           /* PORCOES_TOTAL  */
+    TEMPO_TOTAL = 270,             /* TEMPO_TOTAL  */
+    NUMERO = 271,                  /* NUMERO  */
+    QUANTIDADE = 272,              /* QUANTIDADE  */
+    TEMPERATURA = 273,             /* TEMPERATURA  */
+    DURACAO = 274,                 /* DURACAO  */
+    IDENTIFICADOR = 275,           /* IDENTIFICADOR  */
+    STRING = 276                   /* STRING  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -86,7 +87,7 @@ union YYSTYPE
     char  *id;
     char  *txt;
 
-#line 90 "parser.tab.h"
+#line 91 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
