@@ -8,7 +8,7 @@ void gerar_output_go(Encomenda* e) {
         return;
     }
 
-    fprintf(f, "func main() {\n");
+    fprintf(f, "{\n");
 
     fprintf(f, "Println(\"ENCOMENDA\")\n");
     fprintf(f, "Println(\"=============================================\")\n");
@@ -51,6 +51,6 @@ void gerar_output_go(Encomenda* e) {
         fprintf(f, "Println(\"=============================================\")\n");
     }
 
-    fprintf(f, "}\n");
+    fprintf(f, "}");
     fclose(f);
 }

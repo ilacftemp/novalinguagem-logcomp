@@ -39,11 +39,3 @@ Essa execução gerará o arquivo na linguagem `go`, que pode ser compilado atra
 Em que o arquivo `output.go` é o gerado anteriormente pelo executável `encomenda`. A saída será impressa no terminal, pronta para o usuário.
 
 LEMBRETE: Use a versão do `python` compatível com o seu sistema para a compilação.
-
----
-
-## Autora
-
-**Ilana Finger**  
-Projeto acadêmico - Insper  
-Disciplina: Lógica da Computação (2025/1)

@@ -19,7 +19,7 @@ class Tokenizer:
         self.next = None
 
     def selectNext(self):
-        palavras_reservadas = ['Println', 'if', 'else', 'for', 'Scan', 'var', 'true', 'false', 'int', 'string', 'bool', 'return', 'func']
+        palavras_reservadas = ['Println', 'if', 'else', 'for', 'Scan', 'var', 'true', 'false', 'int', 'string', 'bool']
         if len(self.source) == self.position:
             self.next = Token('EOF', '')
             return
@@ -62,9 +62,6 @@ class Tokenizer:
             self.position += 1
         elif char == "}":
             self.next = Token('close_chave', char)
-            self.position += 1
-        elif char == ",":
-            self.next = Token('comma', char)
             self.position += 1
         elif char == "\n":
             self.next = Token('enter', char)
@@ -112,7 +109,7 @@ class Tokenizer:
                     self.next = Token('var', "")
                 elif iden == "int" or iden == "string" or iden == "bool":
                     self.next = Token('type', iden)
-                elif iden == "Println" or iden == "if" or iden == "else" or iden == "for" or iden == "Scan" or iden == "return" or iden == "func":
+                elif iden == "Println" or iden == "if" or iden == "else" or iden == "for" or iden == "Scan":
                     self.next = Token('reserved', iden)
             else:
                 self.next = Token('iden', iden)
@@ -130,6 +127,7 @@ class Node:
     def evaluate(self):
         pass
 
+    @staticmethod
     def newId():
         Node.id += 1
         return Node.id
@@ -137,22 +135,33 @@ class Node:
 class Code():
     pilha = []
     var_table = {}
+    labels = []
 
+    @staticmethod
     def append(instr):
         Code.pilha.append(instr)
 
+    @staticmethod
+    def appendLabel(label):
+        Code.labels.append(label)
+
+    @staticmethod
     def allocVar(nome):
         offset = -4 * (len(Code.var_table) + 1)
         Code.var_table[nome] = offset
 
+    @staticmethod
     def getVarOffset(nome):
         return Code.var_table[nome]
 
+    @staticmethod
     def dump():
         print("section .data")
         print('format_in: db "%d", 0')
         print('format_out: db "%d", 10, 0')
         print("scan_int: dd 0")
+        for label in Code.labels:
+            print(label)
         print()
         print("section .text")
         print("global _start")
@@ -172,18 +181,8 @@ class Code():
 
 class Block(Node):
     def evaluate(self, st):
-        if self.value != "global":
-            new_st = SymbolTable()
-            new_st.parent = st
-        else:
-            new_st = st
-
         for child in self.children:
-            resultado = child.evaluate(new_st)
-            if child.value == "return":
-                return resultado
-            if resultado is not None:
-                return resultado
+            child.evaluate(st)
     
     def generate(self, st):
         for child in self.children:
@@ -192,7 +191,6 @@ class Block(Node):
 class SymbolTable:
     def __init__(self):
         self.table = {}
-        self.parent = None
 
     def __create__(self, nome, tipo, valor):
         if valor is not None:
@@ -201,25 +199,14 @@ class SymbolTable:
             self.table[nome] = (tipo, None)
 
     def __getitem__(self, nome):
-        if nome not in self.table and self.parent is not None:
-            return self.parent.__getitem__(nome)
-        elif nome in self.table:
-            return self.table[nome]
-        else:
-            raise Exception(f"SymbolTable - Variável {nome} não existe")
+        return self.table[nome]
 
     def __setitem__(self, nome, valor):
-        if nome not in self.table and self.parent is not None:
-            self.parent.__setitem__(nome, valor)
-            return
-        elif nome in self.table:
-            tipo = self.table[nome][0]
-            if ((isinstance(valor[1], bool) and tipo == "bool") or (isinstance(valor[1], int) and tipo == "int") or (isinstance(valor[1], str) and tipo == "string")):
-                self.table[nome] = (tipo, valor[1])
-            else:
-                raise Exception("Assignment - Tipo incompatível")
+        tipo = self.table[nome][0]
+        if ((isinstance(valor[1], bool) and tipo == "bool") or (isinstance(valor[1], int) and tipo == "int") or (isinstance(valor[1], str) and tipo == "string")):
+            self.table[nome] = (tipo, valor[1])
         else:
-            raise Exception(f"SymbolTable - Variável {nome} não existe")
+            raise Exception("Assignment - Tipo incompatível")
 
 class Print(Node):
     def evaluate(self, st):
@@ -255,6 +242,11 @@ class IntVal(Node):
 class StrVal(Node):
     def evaluate(self, st):
         return ("str", self.value)
+    
+    def generate(self, st):
+        label = f"msg_str_{self.id}"
+        Code.appendLabel(f'{label}: db "{self.value}", 10, 0')
+        Code.append(f"mov eax, {label}")
 
 class BoolVal(Node):
     def evaluate(self, st):
@@ -266,57 +258,13 @@ class BoolVal(Node):
         else:
             Code.append("mov eax, 0")
 
-class FuncDec(Node):
-    def evaluate(self, st):
-        st.table[self.children[0].value] = (self, self.value, True)
-
-class FuncCall(Node):
-    def evaluate(self, st):        
-        func_dec, tipo_retorno, flag_eh_func = st.__getitem__(self.value)
-
-        if not flag_eh_func:
-            raise Exception(f"FuncCall - {self.value} não é uma função")
-        
-        args = func_dec.children[1:-1] #exclui o iden e o bloco
-        if len(args) != len(self.children):
-            raise Exception(f"FuncCall - Número de argumentos inválido para {self.value}")
-        
-        new_st = SymbolTable()
-        new_st.parent = st
-
-
-        for i in range(len(args)):
-            nome_var_local = args[i].children
-            tipo_var_local = args[i].value
-            valor_var_local = self.children[i].evaluate(st)
-            if valor_var_local[0] != tipo_var_local:
-                raise Exception(f"FuncCall - Tipo de argumento inválido para {self.value}")
-            new_st.__create__(nome_var_local, tipo_var_local, valor_var_local)
-
-        resultado = func_dec.children[-1].evaluate(new_st)
-
-        if tipo_retorno != "void":
-            if resultado is None:
-                raise Exception(f"FuncCall - Função {self.value} não retornou valor")
-            if resultado[0] != tipo_retorno:
-                raise Exception(f"FuncCall - Tipo de retorno incorreto para {self.value}")
-            return resultado
-        else:
-            if resultado is not None:
-                raise Exception(f"FuncCall - Função {self.value} não deveria retornar valor")
-            return None
-
-class Return(Node):
-    def evaluate(self, st):
-        return self.children[0].evaluate(st)
-
 class VarDec(Node):
     def evaluate(self, st):
         tipo = self.value
         if self.children[0] in st.table:
             raise Exception("VarDec - Variável já existe")
         if len(self.children) == 2:
-            if not (self.children[1].evaluate(st)[0] in tipo):
+            if self.children[1].evaluate(st)[0] != tipo:
                 raise Exception("VarDec - Tipo incompatível")
             st.__create__(self.children[0], tipo, self.children[1].evaluate(st))
         else:
@@ -338,7 +286,7 @@ class BinOp(Node):
             if left[0] == "string" or right[0] == "string":
                 left_val = str(left[1]).lower() if left[0] == "bool" else str(left[1])
                 right_val = str(right[1]).lower() if right[0] == "bool" else str(right[1])
-                return ("string", left_val + right_val)
+                return ("str", left_val + right_val)
             return ("int", left[1] + right[1])
         elif left[0] == right[0]:
             if self.value == '-':
@@ -475,11 +423,9 @@ class If(Node):
         if condicao[0] != "bool":
             raise Exception("If - Condição inválida")
         if condicao[1]:
-            res = self.children[1].evaluate(st)
-            return res
+            self.children[1].evaluate(st)
         elif len(self.children) == 3:
-            res = self.children[2].evaluate(st)
-            return res
+            self.children[2].evaluate(st)
 
     def generate(self, st):
         label_else = f"else_{self.id}"
@@ -514,90 +460,20 @@ class Parser:
     def __init__(self):
         self.tokenizer = None
 
-    def parseProgram(self):
-        filhos = []
-
-        while self.tokenizer.next.type != "EOF":
-            if self.tokenizer.next.type == "reserved" and self.tokenizer.next.value == "func":
-                filhos.append(self.parseFuncDec())
-            elif self.tokenizer.next.type == "enter":
-                self.tokenizer.selectNext()
-            else:
-                filhos.append(self.parseStatement())
-
-        return Block("global", filhos)
-            
-    def parseFuncDec(self):
-        if self.tokenizer.next.value == "func":
-            self.tokenizer.selectNext()
-            if self.tokenizer.next.type == "iden":
-                args = []
-                no_iden = Iden(self.tokenizer.next.value, [])
-                self.tokenizer.selectNext()
-                if self.tokenizer.next.type == "open_par":
-                    self.tokenizer.selectNext()
-                    while self.tokenizer.next.type != "close_par":
-                        if self.tokenizer.next.type == "iden":
-                            nome_arg = self.tokenizer.next.value
-                            self.tokenizer.selectNext()
-                            if self.tokenizer.next.type == "type":
-                                tipo = self.tokenizer.next.value
-                                self.tokenizer.selectNext()
-                                arg = VarDec(tipo, nome_arg)
-                                args.append(arg)
-                            else:
-                                raise Exception("FuncDec - Deveria ter um type")
-                        elif self.tokenizer.next.type == "comma":
-                            self.tokenizer.selectNext()
-                        else:
-                            raise Exception("FuncDec - Esperava ',' ou ')' após argumento")
-                    self.tokenizer.selectNext()
-                    if self.tokenizer.next.type == "type":
-                        return_type = self.tokenizer.next.value
-                        self.tokenizer.selectNext()
-                        if self.tokenizer.next.type == "open_chave":
-                            block = self.parseBlock()
-                            filhos = [no_iden]
-                            for arg in args:
-                                filhos.append(arg)
-                            filhos.append(block)
-                            return FuncDec(return_type, filhos)
-                        else:
-                            raise Exception("FuncDec - Deveria ter um open_chave")
-                    elif self.tokenizer.next.type == "open_chave":
-                        block = self.parseBlock()
-                        filhos = [no_iden]
-                        for arg in args:
-                            filhos.append(arg)
-                        filhos.append(block)
-                        return FuncDec("void", filhos)
-                    else:
-                        raise Exception("FuncDec - Deveria ter um type ou open_chave")
-                else:
-                    raise Exception("FuncDec - Deveria ter um open_par")
-            else:
-                raise Exception("FuncDec - Deveria ter um iden")
-        else:
-            raise Exception("FuncDec - Deveria começar com func")
-
     def parseBlock(self):
-        if self.tokenizer.next.type != "open_chave":
-            raise Exception("Block - Deveria começar com open_chave")
-        
-        self.tokenizer.selectNext()
-
-        if self.tokenizer.next.type == "close_chave":
-            raise Exception("Block - Não pode ter close_chave depois de open_chave")
-
-        children = []
-        while self.tokenizer.next.type != "close_chave":
+        if self.tokenizer.next.type == "open_chave":
+            self.tokenizer.selectNext()
             if self.tokenizer.next.type == "enter":
                 self.tokenizer.selectNext()
+                children = []
+                while self.tokenizer.next.type != "close_chave":
+                    children.append(self.parseStatement())
+                self.tokenizer.selectNext()
+                return Block(None, children)
             else:
-                children.append(self.parseStatement())
-
-        self.tokenizer.selectNext()
-        return Block(None, children)
+                raise Exception("Block - Deveria ter um enter")
+        else:
+            raise Exception("Block - Deveria começar com open_chave")
 
     def parseStatement(self):
         if self.tokenizer.next.type == "iden":
@@ -606,20 +482,6 @@ class Parser:
             if self.tokenizer.next.type == "assign":
                 self.tokenizer.selectNext()
                 return Assignment("=", [nome, self.parseBExpression()])
-            elif self.tokenizer.next.type == "open_par":
-                self.tokenizer.selectNext()
-                args = []
-                if self.tokenizer.next.type != "close_par":
-                    while True:
-                        args.append(self.parseBExpression())
-                        if self.tokenizer.next.type == "comma":
-                            self.tokenizer.selectNext()
-                        elif self.tokenizer.next.type == "close_par":
-                            break
-                        else:
-                            raise Exception("Statement - Esperava ',' ou ')' após argumento")
-                self.tokenizer.selectNext()
-                return FuncCall(nome, args)
             else:
                 raise Exception("Statement - iden deveria ser seguido de um assign")
         elif self.tokenizer.next.value == "Println":
@@ -664,14 +526,9 @@ class Parser:
                 return If("if", [condicao, subArvoreIf, self.parseBlock()])
             else:
                 return If("if", [condicao, subArvoreIf])
-        elif self.tokenizer.next.value == "return":
-            self.tokenizer.selectNext()
-            return Return("return", [self.parseBExpression()])
         elif self.tokenizer.next.type == "enter":
             self.tokenizer.selectNext()
             return NoOp(None, [])
-        elif self.tokenizer.next.type == "open_chave":
-            return self.parseBlock()
         else:
             raise Exception("Statement - Deveria começar com iden, print, enter, var, for ou if")
         
@@ -722,21 +579,9 @@ class Parser:
             self.tokenizer.selectNext()
             return no
         elif self.tokenizer.next.type == 'iden':
-            nome = self.tokenizer.next.value
+            no = Iden(self.tokenizer.next.value, [])
             self.tokenizer.selectNext()
-            if self.tokenizer.next.type == 'open_par':
-                self.tokenizer.selectNext()
-                args = []
-                while self.tokenizer.next.type != "close_par":
-                    args.append(self.parseBExpression())
-                    if self.tokenizer.next.type == "comma":
-                        self.tokenizer.selectNext()
-                    elif self.tokenizer.next.type != "close_par":
-                        raise Exception("parseFactor - Esperava ',' ou ')' após argumento")
-                self.tokenizer.selectNext()
-                return FuncCall(nome, args)
-            else:
-                return Iden(nome, [])
+            return no
         elif self.tokenizer.next.type == 'str':
             no = StrVal(self.tokenizer.next.value, [])
             self.tokenizer.selectNext()
@@ -774,17 +619,19 @@ class Parser:
     def run(self, code):
         self.tokenizer = Tokenizer(code)
         self.tokenizer.selectNext()
-        return self.parseProgram()
+        result = self.parseBlock()
+        if self.tokenizer.next.type != 'EOF':
+            raise Exception("Run - Retorno antes do final (EOF)")
+        return result
 
 def main(expressao):
     prepro = PrePro()
     expressao = prepro.filter(expressao)
     parser = Parser()
     ast = parser.run(expressao)
-    global_st = SymbolTable()
-    ast.evaluate(global_st)
-    FuncCall("main", []).evaluate(global_st)
-    # Code.dump()
+    st = SymbolTable()
+    ast.generate(st)
+    Code.dump()
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -792,8 +639,8 @@ if __name__ == "__main__":
         with open(arquivo, 'r') as file:
             expressao = file.read()
         output = io.StringIO()
-        # with contextlib.redirect_stdout(output):
-        main(expressao)
+        with contextlib.redirect_stdout(output):
+            main(expressao)
         codigo_asm = output.getvalue()
 
         saida = arquivo.rsplit(".", 1)[0] + ".asm"
