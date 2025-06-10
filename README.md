@@ -48,7 +48,7 @@ A pasta de testes contém alguns exemplos de arquivos que podem ser submetidos. 
 
 A saída envolve os resumos das informações relevantes para o plano de execução, como tempo total, ingredientes e quantidades necessários, entre outros.
 
-### Exemplo de entrada e saida
+### Exemplo completo de execução
 
 Entrada (teste 1):
 
