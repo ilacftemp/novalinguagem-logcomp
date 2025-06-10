@@ -1,4 +1,4 @@
-# APS - Definição de Linguagem de Programação (EBNF)
+# APS - Definição de Linguagem de Programação
 
 ---
 
