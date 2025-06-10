@@ -46,6 +46,7 @@ pedido
         strncpy(r->nome_receita, $<id>4, sizeof(r->nome_receita));
         r->num_ingredientes = 0;
         r->num_etapas = 0;
+        r->porcoes_receita = 1;
 
         p->porcoes_pedido = 0;
         p->tempo_total = 0;
@@ -103,7 +104,7 @@ item_receita
             Receita* r = &encomenda.pedidos[pedido_atual].receita;
             int i = r->num_etapas++;
             r->etapas[i].tipo = ETAPA_DECORAR;
-            r->etapas[i].duracao = 20; // fixo, como no gerar_output
+            r->etapas[i].duracao = 20;
             strncpy(r->etapas[i].decoracao, $2, sizeof(r->etapas[i].decoracao));
         }
     }
