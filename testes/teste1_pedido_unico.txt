@@ -1,0 +1,14 @@
+encomenda:
+    pedido:
+        receita bolo:
+            porcoes 4
+            ingrediente farinha 200g
+            ingrediente ovos 2
+            forno 180C 30min
+            resfriar 10min
+            decorar "açúcar de confeiteiro"
+
+        porcoes_total 4
+        tempo_total 60min
+
+planejar

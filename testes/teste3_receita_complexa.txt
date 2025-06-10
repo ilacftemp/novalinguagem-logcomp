@@ -1,0 +1,17 @@
+encomenda:
+    pedido:
+        receita lasanha:
+            porcoes 6
+            ingrediente massa 250g
+            ingrediente carne 300g
+            ingrediente queijo 200g
+            ingrediente molho 150g
+            forno 200C 45min
+            resfriar 15min
+            decorar "folhas de manjericão"
+            resfriar 10min
+
+        porcoes_total 12
+        tempo_total 120min
+
+planejar

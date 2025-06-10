@@ -1,0 +1,42 @@
+encomenda:
+    pedido:
+        receita bolo_chocolate:
+            porcoes 8
+            ingrediente farinha 300g
+            ingrediente acucar 200g
+            ingrediente chocolate 100g
+            ingrediente ovos 4
+            forno 180C 40min
+            resfriar 20min
+            decorar "cobertura de chocolate"
+
+        porcoes_total 16
+        tempo_total 180min
+
+encomenda:
+    pedido:
+        receita torta_limao:
+            porcoes 6
+            ingrediente leite_condensado 395g
+            ingrediente suco_limao 120ml
+            ingrediente ovos 3
+            forno 160C 30min
+            resfriar 60min
+            decorar "raspas de limão"
+
+        porcoes_total 12
+        tempo_total 120min
+
+    pedido:
+        receita bolo:
+            porcoes 4
+            ingrediente farinha 200g
+            ingrediente ovos 2
+            forno 180C 30min
+            resfriar 10min
+            decorar "açúcar de confeiteiro"
+
+        porcoes_total 4
+        tempo_total 60min
+
+planejar

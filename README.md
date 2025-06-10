@@ -1,31 +1,48 @@
 # APS - Definição de Linguagem de Programação (EBNF)
 
-Este repositório contém o desenvolvimento de uma linguagem de programação, realizada como parte da Atividade Prática Supervisionada (APS) da disciplina **Lógica da Computação - 2025/1**.
-
 ---
 
 ## Objetivo
 
-O objetivo desta etapa é definir formalmente, usando a notação EBNF (Extended Backus-Naur Form), a gramática de uma linguagem de programação com suporte a:
+Criação de uma linguagem voltada para confeiteiros, com o objetivo de organizar pedidos de forma metódica e gerar um plano de execução para as encomendas recebidas. A partir das receitas associadas a cada pedido, a linguagem permite:
 
-- Declarações de variáveis
-- Estruturas condicionais (`if`, `else`)
-- Laços de repetição (`for`, `while`)
-- Comandos de entrada/saída (`Scan`, `Println`)
-- Operadores aritméticos e booleanos
-
----
-
-## Arquivos
-
-- `ebnf.txt`: Definição da gramática completa em EBNF
-- `obs_ebnf_inicial.txt`: Anotações e decisões de projeto
-- `exemplo_de_input.txt`: Exemplo de código válido na linguagem
-- `exemplo_de_output.txt`: Saída esperada da execução do exemplo
+- resumir as quantidades de ingredientes necessárias;
+- listar os passos de produção, como tempo de forno, resfriamento e decoração;
+- ajustar automaticamente as quantidades de ingredientes com base na proporção entre porções que uma receita rende e porções solicitadas;
+- estimar o tempo total de produção de cada pedido;
+- comparar o tempo total de produção do pedido com o tempo disponível (informado no input).
 
 ---
 
-## Autor
+## Testes
+
+A pasta de testes contém alguns exemplos de arquivos que podem ser submetidos. Como fica evidente, o sistema permite na entrada mais de uma encomenda, mais de um pedido por encomenda e vários ingredientes e métodos de produção para cada pedido.
+
+A saída envolve os resumos das informações relevantes para o plano de execução, como tempo total, ingredientes e quantidades necessários, entre outros.
+
+---
+
+## Como usar
+
+Após clonar o repositório, é necessário abrir um terminal (recomendado o uso de Ubuntu ou terminal WSL) que permita o uso comando `make`. Em seguida, rode o programa da seguinte forma:
+
+```./encomenda < arquivo_input.txt```
+
+Substitua `arquivo_input.txt` pelo nome do arquivo desejado. Exemplo:
+
+```./encomenda < testes/teste1_pedido_unico.txt```
+
+Essa execução gerará o arquivo na linguagem `go`, que pode ser compilado através do uso do `compilador_para_go.py`, desenvolvido ao longo do semestre na disciplina Lógica da Computação. Para compilar o arquivo, utilize o seguinte comando no terminal:
+
+```python compilador_para_go.py output.go```
+
+Em que o arquivo `output.go` é o gerado anteriormente pelo executável `encomenda`. A saída será impressa no terminal, pronta para o usuário.
+
+LEMBRETE: Use a versão do `python` compatível com o seu sistema para a compilação.
+
+---
+
+## Autora
 
 **Ilana Finger**  
 Projeto acadêmico - Insper  

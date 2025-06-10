@@ -20,7 +20,7 @@ void gerar_output_go(Encomenda* e) {
         float fator = (float)p->porcoes_pedido / (float)r->porcoes_receita;
         fprintf(f, "Println(\"Pedido %d: %s\")\n", i + 1, r->nome_receita);
         fprintf(f, "Println(\"---------------------------------------------\")\n");
-        fprintf(f, "Println(\"Receita adaptada para %d porções:\")\n", p->porcoes_pedido);
+        fprintf(f, "Println(\"Receita adaptada para %d porções (%.1f %s a receita base)\")\n", p->porcoes_pedido, fator, (fator == 1.0 ? "vez" : "vezes"));
         fprintf(f, "Println(\"Ingredientes:\")\n");
 
         for (int j = 0; j < r->num_ingredientes; j++) {
@@ -44,10 +44,10 @@ void gerar_output_go(Encomenda* e) {
         if (r->decoracao)
             fprintf(f, "Println(\"- Decoração: 20 minutos\")\n");
 
-        int total = r->forno_duracao + r->resfriar + 20;
+        int total = r->forno_duracao + r->resfriar + (r->decoracao ? 20 : 0);
         fprintf(f, "Println(\"Tempo total previsto: %d minutos\")\n", total);
-        fprintf(f, "Println(\"Limite do pedido: %d minutos\")\n", p->tempo_total);
-        fprintf(f, "Println(\"Status: %s\")\n", (total <= p->tempo_total) ? "Dentro do limite" : "Fora do limite");
+        fprintf(f, "Println(\"Tempo disponível para produção: %d minutos\")\n", p->tempo_total);
+        fprintf(f, "Println(\"Status: %s\")\n", (total <= p->tempo_total) ? "Dentro do limite de tempo" : "Fora do limite de tempo");
         fprintf(f, "Println(\"=============================================\")\n");
     }
 

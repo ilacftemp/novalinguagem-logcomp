@@ -1,0 +1,18 @@
+encomenda:
+    pedido:
+        receita mega_bolo:
+            porcoes 100
+            ingrediente farinha 2000g
+            ingrediente acucar 1500g
+            ingrediente ovos 80
+            ingrediente manteiga 1000g
+            forno 180C 120min
+            resfriar 60min
+            decorar "flores e velas"
+            decorar "frutas"
+            decorar "glacê real"
+
+        porcoes_total 200
+        tempo_total 360min
+
+planejar

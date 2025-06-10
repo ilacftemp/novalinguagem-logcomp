@@ -1,0 +1,9 @@
+encomenda:
+    pedido:
+        receita NULL:
+            porcoes 1
+
+        porcoes_total 0
+        tempo_total 0min
+
+planejar
