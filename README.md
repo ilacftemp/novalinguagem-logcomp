@@ -36,6 +36,6 @@ Essa execução gerará o arquivo na linguagem `go`, que pode ser compilado atra
 
 ```python compilador_para_go.py output.go```
 
-Em que o arquivo `output.go` é o gerado anteriormente pelo executável `encomenda`. A saída será impressa no terminal, pronta para o usuário.
+Em que o arquivo `output.go` é o gerado anteriormente pelo executável `encomenda`. A saída será um arquivo `.asm` que pode ser montado e executado.
 
 LEMBRETE: Use a versão do `python` compatível com o seu sistema para a compilação.
