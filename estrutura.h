@@ -3,6 +3,7 @@
 
 #define MAX_INGREDIENTES 20
 #define MAX_PEDIDOS 10
+#define MAX_ETAPAS 10
 
 typedef struct {
     char* nome;
@@ -10,15 +11,23 @@ typedef struct {
     char* unidade;
 } Ingrediente;
 
+typedef enum { ETAPA_FORNO, ETAPA_RESFRIAR, ETAPA_DECORAR } TipoEtapa;
+
 typedef struct {
-    char* nome_receita;
+    TipoEtapa tipo;
+    int duracao;
+    int temperatura;
+    char decoracao[100];
+} EtapaExecucao;
+
+
+typedef struct {
+    char nome_receita[100];
     int porcoes_receita;
     Ingrediente ingredientes[MAX_INGREDIENTES];
     int num_ingredientes;
-    int forno_temp;
-    int forno_duracao;
-    int resfriar;
-    char* decoracao;
+    EtapaExecucao etapas[MAX_ETAPAS];
+    int num_etapas;
 } Receita;
 
 typedef struct {

@@ -1,20 +1,22 @@
 encomenda:
     pedido:
-        receita suco:
+        receita cupcake_de_laranja:
             porcoes 2
-            ingrediente laranja 3
-            ingrediente gelo 2
+            ingrediente laranja 2
+            ingrediente farinha 120g
+            ingrediente ovo 1
+            forno 180C 45min
             resfriar 5min
 
         porcoes_total 4
         tempo_total 10min
 
     pedido:
-        receita cafe:
+        receita brownie:
             porcoes 1
-            ingrediente agua 200g
-            ingrediente cafe 10g
-            forno 100C 5min
+            ingrediente chocolate 200g
+            ingrediente manteiga 100g
+            forno 180C 5min
 
         porcoes_total 2
         tempo_total 15min

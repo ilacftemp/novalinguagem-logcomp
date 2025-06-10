@@ -6,6 +6,7 @@ extern int yyparse();
 extern FILE* yyin;
 
 void gerar_output_go(Encomenda* encomenda);
+void liberar_memoria(void);
 
 int main(int argc, char** argv) {
     if (argc > 1) {

@@ -8,6 +8,8 @@ extern Encomenda encomenda;
 int pedido_atual = -1;
 
 void liberar_memoria();
+int yylex(void);
+int yyerror(const char* s);
 %}
 
 %union {
@@ -41,12 +43,9 @@ pedido
         Pedido* p = &encomenda.pedidos[pedido_atual];
         Receita* r = &p->receita;
 
-        r->nome_receita = strdup($<id>4);
+        strncpy(r->nome_receita, $<id>4, sizeof(r->nome_receita));
         r->num_ingredientes = 0;
-        r->forno_duracao = 0;
-        r->forno_temp = 0;
-        r->resfriar = 0;
-        r->decoracao = NULL;
+        r->num_etapas = 0;
 
         p->porcoes_pedido = 0;
         p->tempo_total = 0;
@@ -85,17 +84,28 @@ item_receita
     | FORNO TEMPERATURA DURACAO {
         if (pedido_atual >= 0) {
             Receita* r = &encomenda.pedidos[pedido_atual].receita;
-            r->forno_temp = $2;
-            r->forno_duracao = $3;
+            int i = r->num_etapas++;
+            r->etapas[i].tipo = ETAPA_FORNO;
+            r->etapas[i].temperatura = $2;
+            r->etapas[i].duracao = $3;
         }
     }
     | RESFRIAR DURACAO {
-        if (pedido_atual >= 0)
-            encomenda.pedidos[pedido_atual].receita.resfriar = $2;
+        if (pedido_atual >= 0) {
+            Receita* r = &encomenda.pedidos[pedido_atual].receita;
+            int i = r->num_etapas++;
+            r->etapas[i].tipo = ETAPA_RESFRIAR;
+            r->etapas[i].duracao = $2;
+        }
     }
     | DECORAR STRING {
-        if (pedido_atual >= 0)
-            encomenda.pedidos[pedido_atual].receita.decoracao = strdup($2);
+        if (pedido_atual >= 0) {
+            Receita* r = &encomenda.pedidos[pedido_atual].receita;
+            int i = r->num_etapas++;
+            r->etapas[i].tipo = ETAPA_DECORAR;
+            r->etapas[i].duracao = 20; // fixo, como no gerar_output
+            strncpy(r->etapas[i].decoracao, $2, sizeof(r->etapas[i].decoracao));
+        }
     }
     ;
 
@@ -127,9 +137,6 @@ int yyerror(const char* s) {
 void liberar_memoria() {
     for (int i = 0; i < encomenda.num_pedidos; i++) {
         Receita* r = &encomenda.pedidos[i].receita;
-
-        if (r->nome_receita) free(r->nome_receita);
-        if (r->decoracao) free(r->decoracao);
 
         for (int j = 0; j < r->num_ingredientes; j++) {
             if (r->ingredientes[j].nome) free(r->ingredientes[j].nome);

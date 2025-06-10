@@ -29,25 +29,42 @@ void gerar_output_go(Encomenda* e) {
         }
 
         fprintf(f, "Println(\"Plano de execução:\")\n");
-        if (r->forno_duracao > 0)
-            fprintf(f, "Println(\"1. Assar a %d°C por %d minutos.\")\n", r->forno_temp, r->forno_duracao);
-        if (r->resfriar > 0)
-            fprintf(f, "Println(\"2. Resfriar por %d minutos.\")\n", r->resfriar);
-        if (r->decoracao)
-            fprintf(f, "Println(\"3. Decorar com %s.\")\n", r->decoracao);
+        int total = 0;
+        int tempo_forno = 0, tempo_resfriar = 0, tempo_decorar = 0;
+
+        for (int k = 0; k < r->num_etapas; k++) {
+            EtapaExecucao* etapa = &r->etapas[k];
+            switch (etapa->tipo) {
+                case ETAPA_FORNO:
+                    fprintf(f, "Println(\"%d. Assar a %d°C por %d minutos.\")\n", k+1, etapa->temperatura, etapa->duracao);
+                    tempo_forno += etapa->duracao;
+                    total += etapa->duracao;
+                    break;
+                case ETAPA_RESFRIAR:
+                    fprintf(f, "Println(\"%d. Resfriar por %d minutos.\")\n", k+1, etapa->duracao);
+                    tempo_resfriar += etapa->duracao;
+                    total += etapa->duracao;
+                    break;
+                case ETAPA_DECORAR:
+                    fprintf(f, "Println(\"%d. Decorar com %s.\")\n", k+1, etapa->decoracao);
+                    tempo_decorar += etapa->duracao;
+                    total += etapa->duracao;
+                    break;
+            }
+        }
 
         fprintf(f, "Println(\"Tempo estimado:\")\n");
-        if (r->forno_duracao > 0)
-            fprintf(f, "Println(\"- Forno: %d minutos\")\n", r->forno_duracao);
-        if (r->resfriar > 0)
-            fprintf(f, "Println(\"- Resfriamento: %d minutos\")\n", r->resfriar);
-        if (r->decoracao)
-            fprintf(f, "Println(\"- Decoração: 20 minutos\")\n");
+        if (tempo_forno > 0)
+            fprintf(f, "Println(\"- Forno: %d minutos\")\n", tempo_forno);
+        if (tempo_resfriar > 0)
+            fprintf(f, "Println(\"- Resfriamento: %d minutos\")\n", tempo_resfriar);
+        if (tempo_decorar > 0)
+            fprintf(f, "Println(\"- Decoração: %d minutos\")\n", tempo_decorar);
 
-        int total = r->forno_duracao + r->resfriar + (r->decoracao ? 20 : 0);
         fprintf(f, "Println(\"Tempo total previsto: %d minutos\")\n", total);
         fprintf(f, "Println(\"Tempo disponível para produção: %d minutos\")\n", p->tempo_total);
         fprintf(f, "Println(\"Status: %s\")\n", (total <= p->tempo_total) ? "Dentro do limite de tempo" : "Fora do limite de tempo");
+
         fprintf(f, "Println(\"=============================================\")\n");
     }
 
