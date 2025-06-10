@@ -1,0 +1,19 @@
+# Arquivos gerados por compilação
+encomenda
+output.go
+output.asm
+parser.tab.c
+parser.tab.h
+lex.yy.c
+
+# Arquivos intermediários ou temporários
+*.out
+*.o
+*.exe
+*.pyc
+*.log
+*.swp
+*.swo
+
+# Diretórios específicos
+.vscode/

@@ -16,7 +16,7 @@ Criação de uma linguagem voltada para confeiteiros, com o objetivo de organiza
 
 ## Testes
 
-A pasta de testes contém alguns exemplos de arquivos que podem ser submetidos. Como fica evidente, o sistema permite na entrada mais de uma encomenda, mais de um pedido por encomenda e vários ingredientes e métodos de produção para cada pedido.
+A pasta de testes contém alguns exemplos de arquivos que podem ser submetidos. Como fica evidente, o sistema permite na entrada uma encomenda com inúmeros pedidos, que, por sua vez, podem conter vários ingredientes e métodos de produção para cada pedido.
 
 A saída envolve os resumos das informações relevantes para o plano de execução, como tempo total, ingredientes e quantidades necessários, entre outros.
 
